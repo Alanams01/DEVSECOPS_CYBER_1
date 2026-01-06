@@ -1,7 +1,7 @@
 name: Scan Gitleaks
 on:
   push:
-    branches: ["main"]
+    branches: fix/security-Alanams01
   pull_request:
 
 jobs:
