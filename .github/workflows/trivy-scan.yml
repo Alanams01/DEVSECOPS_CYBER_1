@@ -1,0 +1,24 @@
+name: Scan Trivy
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  trivy_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v3
+
+      - name: Lancer Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          exit-code: '1' # ROUGE si failles trouvées
+          severity: 'CRITICAL,HIGH'
+
+      - name: Succès Trivy
+        if: success()
+        run: echo "✅ Trivy n'a trouvé aucune faille critique."

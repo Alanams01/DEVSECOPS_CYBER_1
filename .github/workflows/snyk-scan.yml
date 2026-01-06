@@ -1,0 +1,25 @@
+name: Scan Snyk
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  snyk_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v3
+
+      # Snyk a besoin de l'environnement (ex: Node, Python) pour bien scanner
+      # Ici je mets un setup générique, Snyk détectera le langage
+      - name: Lancer Snyk pour vérifier les vulnérabilités
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test # 'test' scanne les dépendances
+
+      - name: Succès Snyk
+        if: success()
+        run: echo "✅ Snyk n'a trouvé aucune vulnérabilité."

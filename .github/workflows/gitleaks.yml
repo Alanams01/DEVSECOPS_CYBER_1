@@ -1,0 +1,23 @@
+name: Scan Gitleaks
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  gitleaks_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # OBLIGATOIRE pour Gitleaks (scanne tout l'historique)
+
+      - name: Lancer Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Succès Gitleaks
+        if: success()
+        run: echo "✅ Gitleaks n'a trouvé aucun secret exposé."
