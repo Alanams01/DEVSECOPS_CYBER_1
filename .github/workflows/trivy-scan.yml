@@ -16,7 +16,7 @@ jobs:
         with:
           scan-type: 'fs'
           scan-ref: '.'
-          exit-code: '1' # ROUGE si failles trouvées
+          exit-code: '1' 
           severity: 'CRITICAL,HIGH'
 
       - name: Succès Trivy

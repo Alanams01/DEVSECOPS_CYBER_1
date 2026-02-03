@@ -18,7 +18,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: test # 'test' scanne les dépendances
+          command: test 
 
       - name: Succès Snyk
         if: success()
